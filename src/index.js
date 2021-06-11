@@ -8,3 +8,21 @@ document.getElementById("app").innerHTML = `
   <a href="https://parceljs.org" target="_blank" rel="noopener noreferrer">here</a>.
 </div>
 `;
+
+const targetNode = document.body;
+
+const config = { attributes: true, childList: true, subtree: true };
+
+(function () {
+  const observer = new MutationObserver(function () {
+    console.log("aaaaa");
+  });
+
+  observer.observe(targetNode, config);
+
+  setTimeout(() => {
+    targetNode.innerHTML = `
+    <div>aaaaaa</div>
+    `;
+  }, 1000);
+})();
