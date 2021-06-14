@@ -1,5 +1,27 @@
 import "./styles.css";
 
+const targetNode = document.body;
+
+const mutationObserverConfig = {
+  attributes: true,
+  childList: true,
+  subtree: true
+};
+
+const observer = new MutationObserver(function (records) {
+  for (const record of records) {
+    if (record.type === "childList") {
+      for (const node of Array.from(record.addedNodes)) {
+        if (node.querySelectorAll) {
+          console.log(node);
+        }
+      }
+    }
+  }
+});
+
+observer.observe(targetNode, mutationObserverConfig);
+
 document.getElementById("app").innerHTML = `
 <h1>Hello Vanilla!</h1>
 <div>
@@ -8,25 +30,3 @@ document.getElementById("app").innerHTML = `
   <a href="https://parceljs.org" target="_blank" rel="noopener noreferrer">here</a>.
 </div>
 `;
-
-const targetNode = document.body;
-
-const config = { attributes: true, childList: true, subtree: true };
-
-(function () {
-  const observer = new MutationObserver(function (mutationsList, observer) {
-    mutationsList.forEach((element) => {
-      const nodes = element.addedNodes[1];
-      console.log(nodes);
-    });
-    console.log("aaaaa");
-  });
-
-  observer.observe(targetNode, config);
-
-  setTimeout(() => {
-    targetNode.innerHTML = `
-    <div>aaaaaa</div>
-    `;
-  }, 1000);
-})();
