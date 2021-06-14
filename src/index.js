@@ -14,7 +14,11 @@ const targetNode = document.body;
 const config = { attributes: true, childList: true, subtree: true };
 
 (function () {
-  const observer = new MutationObserver(function () {
+  const observer = new MutationObserver(function (mutationsList, observer) {
+    mutationsList.forEach((element) => {
+      const nodes = element.addedNodes[1];
+      console.log(nodes);
+    });
     console.log("aaaaa");
   });
 
